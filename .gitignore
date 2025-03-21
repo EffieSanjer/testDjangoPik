@@ -1,0 +1,11 @@
+.idea/
+*.pyc
+__pycache__/
+venv/
+.env
+db.sqlite3
+/media
+
+node_modules/
+.nuxt/
+dist/
