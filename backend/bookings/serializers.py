@@ -12,8 +12,11 @@ class BookingSerializer(serializers.ModelSerializer):
 
 
 class BookingListSerializer(BookingSerializer):
+    hike_title = serializers.CharField(source='hike.title')
+    hike_slug = serializers.CharField(source='hike.slug')
+
     class Meta(BookingSerializer.Meta):
-        fields = ['id', 'created_at', 'name', 'phone', 'hike', 'is_canceled']
+        fields = ['id', 'created_at', 'name', 'phone', 'email', 'hike_title', 'hike_slug', 'is_canceled']
 
 
 class BookingCreateSerializer(BookingSerializer):
@@ -23,4 +26,9 @@ class BookingCreateSerializer(BookingSerializer):
     def validate_phone(self, value):
         if not re.match(r'^\+7\d{10}$', value.strip()):
             raise serializers.ValidationError("Некорректный номер телефона")
+        return value
+
+    def validate_email(self, value):
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', value.strip()):
+            raise serializers.ValidationError("Некорректный email")
         return value

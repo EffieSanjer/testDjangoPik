@@ -23,7 +23,7 @@ class BookingCancelView(APIView):
         except Booking.DoesNotExist:
             return Response({"error": "Hike not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        booking.is_canceled = True
+        booking.is_canceled = not booking.is_canceled
         booking.save()
 
         return Response(status=status.HTTP_200_OK)
