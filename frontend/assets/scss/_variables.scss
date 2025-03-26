@@ -1,0 +1,49 @@
+@import "~bulma/sass/utilities/_all";
+
+
+$primary: #ff6640;;
+$primary-light: findLightColor($primary);
+$primary-dark: findDarkColor($primary);
+$primary-invert: findColorInvert($primary);
+
+$link: #00d164;
+$link-light: findLightColor($link);
+$link-dark: findDarkColor($link);
+$link-invert: findColorInvert($link);
+
+//$dark: #363636;
+//$light: #f8f9fa;
+
+$custom-colors: null !default;
+
+
+$colors: mergeColorMaps(
+    (
+        "primary": (
+                $primary,
+                $primary-invert,
+                $primary-light,
+                $primary-dark,
+        ),
+        "link": (
+                $link,
+                $link-invert,
+                $link-light,
+                $link-dark,
+        ),
+    ),
+  $custom-colors
+);
+
+$index: calc(1vw + 1vh);
+
+$font-heading: 'Montserrat', sans-serif;
+$font-main: 'Roboto', sans-serif;
+
+$family-sans-serif: $font-main;
+$title-family: $font-heading;
+
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+

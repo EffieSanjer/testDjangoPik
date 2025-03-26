@@ -1,0 +1,36 @@
+@import 'variables';
+@import 'base';
+
+
+body {
+  header {
+    padding: $index 0 calc($index * 1.8);
+    background-color: #FFFFFF;
+  }
+
+  .footer {
+    text-align: center;
+    background-color: #FFFFFF;
+    padding: $index;
+  }
+
+  .title {
+    font-weight: 700;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .main-content {
+    flex-grow: 1;
+  }
+
+}

@@ -1,74 +1,36 @@
 <template>
-  <div>
-    <nav
-      class="navbar header has-shadow is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <a
-          class="navbar-item"
-          href="/"
-        >
-          <img
-            src="~assets/buefy.png"
-            alt="Buefy"
-            height="28"
-          >
-        </a>
-
-        <div class="navbar-burger">
-          <span />
-          <span />
-          <span />
+  <div class="layout">
+    <header>
+      <div class="container level">
+        <div class="level-left">
+          <logo/>
+        </div>
+        <div class="level-left">
+          <b-button tag="nuxt-link" to="/admin/" type="is-dark is-medium">
+            Панель управления
+          </b-button>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <section class="main-content columns">
-      <aside class="column is-2 section">
-        <p class="menu-label is-hidden-touch">
-          General
-        </p>
-        <ul class="menu-list">
-          <li
-            v-for="(item, key) of items"
-            :key="key"
-          >
-            <nuxt-link
-              :to="item.to"
-              exact-active-class="is-active"
-            >
-              <b-icon :icon="item.icon" /> {{ item.title }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </aside>
+    <main class="main-content">
+      <nuxt />
+    </main>
 
-      <div class="container column is-10">
-        <nuxt />
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; Походы. Все права защищены.</p>
       </div>
-    </section>
+    </footer>
   </div>
+
 </template>
 
 <script>
+
+import Logo from "@/components/Logo.vue";
+
 export default {
-  data () {
-    return {
-      items: [
-        {
-          title: 'Home',
-          icon: 'home',
-          to: { name: 'index' }
-        },
-        {
-          title: 'Inspire',
-          icon: 'lightbulb',
-          to: { name: 'inspire' }
-        }
-      ]
-    }
-  }
+  components: {Logo}
 }
 </script>
