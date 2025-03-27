@@ -7,7 +7,7 @@ class Hike(models.Model):
     title = models.CharField('Название похода', max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField('Краткое описание', blank=True, null=True)
-    start_at = models.DateTimeField('Дата и время похода', default=Now())
+    start_at = models.DateTimeField('Дата и время похода', db_default=Now())
     image = models.ImageField('Фото', upload_to='hikes/', blank=True, null=True)
     is_public = models.BooleanField('Показывать на сайте', default=True)
 
@@ -18,6 +18,5 @@ class Hike(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
+        self.slug = slugify(self.title)[:50]
         super().save(*args, **kwargs)
