@@ -20,8 +20,10 @@ class BookingListSerializer(BookingSerializer):
 
 
 class BookingCreateSerializer(BookingSerializer):
+    hike_id = serializers.CharField(source='hike.id')
+
     class Meta(BookingSerializer.Meta):
-        fields = ['name', 'phone', 'email', 'hike']
+        fields = ['name', 'phone', 'email', 'hike_id']
 
     def validate_phone(self, value):
         if not re.match(r'^\+7\d{10}$', value.strip()):
