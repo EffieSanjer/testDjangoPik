@@ -1,8 +1,8 @@
 <template>
-  <div class="card hike-card">
-    <div class="card-image" @click="$router.push(`/hikes/${hike.slug}/`)">
+  <div class="card hike-card" @click="$router.push(`/hikes/${hike.slug}/`)">
+    <div class="card-image">
       <b-image v-if="hike.image" :src="hike.image" alt="hike image" ratio="10by7" lazy></b-image>
-      <img v-else src="~assets/img_placeholder.png" alt="hike image"/>
+      <img v-else src="~assets/img/img_placeholder.png" alt="hike image"/>
     </div>
 
     <div class="card-content">

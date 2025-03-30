@@ -47,6 +47,7 @@ services:
     build:
       context: ./backend
     command: celery -A backend worker --loglevel=info
+    entrypoint: ""
     volumes:
       - ./backend:/app
     networks:

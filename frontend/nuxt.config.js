@@ -62,13 +62,11 @@ export default {
           property: 'refresh',
           data: 'refresh_token'
         },
-        user: {
-          property: false,
-          autoFetch: false
-        },
+        user: false,
         endpoints: {
           login: { url: '/auth/login/', method: 'post' },
           refresh: { url: '/auth/refresh/', method: 'post' },
+          logout: false,
           user: false
         }
       }
@@ -76,7 +74,7 @@ export default {
     redirect: {
       login: '/login/',
       logout: '/',
-      home: '/admin/'
+      home: '/admin/hikes/'
     }
   },
   build: {

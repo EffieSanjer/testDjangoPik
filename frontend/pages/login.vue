@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-      <div class="columns is-centered">
-        <h1 class="title mb-4">Войти</h1>
-      </div>
+    <div class="columns is-centered">
+      <h1 class="title mb-4">Войти</h1>
+    </div>
 
     <div class="columns is-centered">
       <div class="column is-5">
@@ -41,10 +41,13 @@ export default {
       try {
         await $auth.loginWith('local', {
           data: login
+        }).then(async () => {
+          const token = $auth.strategy.token.get()
+          await $auth.setUserToken(token)
+
+        }).catch((error) => {
+          console.error(error)
         })
-
-        await $router.push('/admin/hikes/')
-
       }
       catch (err) {
         $buefy.toast.open({

@@ -11,17 +11,10 @@
               alt="hike image"
               lazy
           />
-          <img v-else src="~assets/img_placeholder.png" alt="hike image"/>
+          <img v-else src="~assets/img/img_placeholder.png" alt="hike image"/>
 
           <div class="content mt-4">
             <p class="subtitle is-4">{{ hike.description }}</p>
-
-<!--            <div class="tags">-->
-<!--              <b-tag type="is-info">-->
-<!--                <b-icon icon="map-marker-distance" size="is-small"></b-icon>-->
-<!--                {{ hike.distance }} км-->
-<!--              </b-tag>-->
-<!--            </div>-->
           </div>
         </div>
       </div>
@@ -38,25 +31,34 @@
 </template>
 
 <script>
-import BookingForm from "@/components/BookingForm.vue"
+import {ref, getCurrentInstance, onServerPrefetch, onMounted} from "vue";
+import BookingForm from "@/components/BookingForm.vue";
 
 export default {
-  components: { BookingForm },
+  components: {BookingForm},
 
-  data() {
+  setup() {
+    const hike = ref(null)
+    const { $axios, $route } = getCurrentInstance().proxy
+    const hikeId = $route.params.slug
+
+    const fetchHike = async () => {
+      try {
+        const { data } = await $axios.get(`/public/hikes/${hikeId}/`)
+        hike.value = data
+      } catch {
+        hike.value = null
+      }
+    }
+
+    onServerPrefetch(fetchHike)
+
+    onMounted(() => {
+      if (!hike.value) fetchHike()
+    })
+
     return {
-      hike: null
-    }
-  },
-
-  async asyncData({ params, $axios, error }) {
-    try {
-      const { data } = await $axios.get(`/public/hikes/${params.slug}/`)
-      return { hike: data }
-    }
-    catch (e) {
-      error({ statusCode: 404, message: 'Поход не найден' })
-      return { hike: null }
+      hike
     }
   }
 }

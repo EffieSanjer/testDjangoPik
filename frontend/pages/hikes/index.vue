@@ -37,41 +37,42 @@
 
 <script>
 import HikeCard from "@/components/HikeCard.vue";
+import {ref, getCurrentInstance, onServerPrefetch, onMounted, computed} from "vue";
 
 export default {
   components: {HikeCard},
 
-  async asyncData({ $axios }) {
-    try {
-      const { data } = await $axios.get('/public/hikes/')
-      return { hikes: data }
-    }
-    catch {
-      return { hikes: [] }
-    }
-  },
+  setup() {
+    const hikes = ref([])
+    const searchQuery = ref('')
+    const { $axios } = getCurrentInstance().proxy
 
-  data() {
+    const fetchHikes = async () => {
+      try {
+        const { data } = await $axios.get('/public/hikes/')
+        hikes.value = data
+      } catch {
+        hikes.value = []
+      }
+    }
+
+    onServerPrefetch(fetchHikes)
+
+    onMounted(() => {
+      if (!hikes.value.length) fetchHikes()
+    })
+
+    const filteredHikes = computed(() => {
+      if (!searchQuery.value) return hikes.value
+      return hikes.value.filter(hike =>
+          hike.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+      )
+    })
+
     return {
-      searchQuery: '',
-      hikes: []
+      searchQuery,
+      filteredHikes
     }
-  },
-
-  computed: {
-    filteredHikes() {
-      if (!this.searchQuery) return this.hikes
-      return this.hikes.filter(hike =>
-          hike.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
-    }
-  },
-
+  }
 }
 </script>
-
-<style scoped>
-.search-box {
-  margin-bottom: 2rem;
-}
-
-</style>

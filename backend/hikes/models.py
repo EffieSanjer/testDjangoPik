@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.functions import Now
 from django.utils.text import slugify
+from unidecode import unidecode
 
 
 class Hike(models.Model):
@@ -18,5 +19,5 @@ class Hike(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)[:50]
+        self.slug = slugify(unidecode(self.title))[:50]
         super().save(*args, **kwargs)

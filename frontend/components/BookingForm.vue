@@ -74,16 +74,10 @@ export default {
       name: '',
       phone: '',
       email: '',
-      hike: props.hikeId,
+      hike_id: props.hikeId,
     })
 
-    const validateForm = () => {
-      return !form.name || !form.email || !form.phone
-    }
-
     const submitForm = async () => {
-      if (!validateForm()) return
-
       isSubmitting.value = true
 
       try {
